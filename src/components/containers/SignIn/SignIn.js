@@ -43,7 +43,7 @@ export const SignIn = props => {
             console.timeEnd('h')
 
 
-            history.push('/home')
+            history.push(`/app/${data.publicAddress}`)
 
       
         }
