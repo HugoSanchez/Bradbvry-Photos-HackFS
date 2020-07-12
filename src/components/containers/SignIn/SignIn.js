@@ -13,18 +13,13 @@ import {
     ButtonText
 } from './styles';
 
+
 const { Magic } = require('magic-sdk');
-const magic = new Magic(magicKey);
+const magic = new Magic('pk_test_B9FC8D928795EDED');
 
 export const SignIn = props => {
 
     const history = useHistory();
-
-    const loggout = async () => {
-        let data = await magic.user.getMetadata()
-        console.log(data)
-        await magic.auth.loginWithMagicLink( data.email );
-    }
 
     const handleLogin = async e => {
         e.preventDefault();
@@ -32,20 +27,12 @@ export const SignIn = props => {
         console.log(email)
         if (email) {
             
-            console.log('hello')
-            console.time('h')
             await magic.auth.loginWithMagicLink({ email });
-            const isLoggedIn = await magic.user.isLoggedIn();
-            console.log(isLoggedIn)
-            console.log('RPC', magic.rpcProvider)
+            await magic.user.isLoggedIn();
+
             let data = await magic.user.getMetadata()
-            console.log('data: ', data)
-            console.timeEnd('h')
-
-
             history.push(`/app/${data.publicAddress}`)
 
-      
         }
     }
 
