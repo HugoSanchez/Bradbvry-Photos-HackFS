@@ -13,7 +13,7 @@ function App() {
         <Switch>
           <Route path='/Signin' component={SignIn} />
           <Route path='/app/:user' component={Home} />
-          <Route exact path="/" render={() => (<Redirect to="/Signin" />)} /> 
+          <Route exact path="/" render={() => (<Redirect to='/app/:user' />)} /> 
         </Switch>
       </BrowserRouter>
     </div>
