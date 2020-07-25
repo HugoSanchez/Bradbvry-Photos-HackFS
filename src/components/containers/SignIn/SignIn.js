@@ -15,11 +15,23 @@ import {
 
 
 const { Magic } = require('magic-sdk');
-const magic = new Magic('pk_test_B9FC8D928795EDED');
+const magic = new Magic(magicKey);
 
 export const SignIn = props => {
 
     const history = useHistory();
+
+    useEffect(() => {
+      checkLoginAndRedirect()},
+    [])
+
+    const checkLoginAndRedirect = async () => {
+        let isLogged = await magic.user.isLoggedIn();
+        if (isLogged) {
+          let data = await magic.user.getMetadata()
+          history.push(`/app/${data.publicAddress}`)
+        }
+    }
 
     const handleLogin = async e => {
         e.preventDefault();
