@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, createRef} from 'react';
 import {ThreadList} from '../../common/ThreadList';
 import {ThreadInput} from '../../common/Input';
+import {UploadButton} from '../../common/UploadButton'
+import {SnackBar} from '../../common/SnackBar';
 import {magicKey} from '../../../config';
 import styled from 'styled-components';
 
@@ -11,15 +13,18 @@ const magic = new Magic(magicKey);
 
 export const Home = props => {
 
+    const ref = createRef()
+
     const [three, setThree] = useState({})
     const [threads, setThreads] = useState([])
+    const [openSnack, setOpenSnack] = useState(false)
     const [posts, setPosts] = useState({})
+
 
     useEffect(() => {
         console.log('MATCH: ', props.match)
         magicTest()
     }, [])
-
 
     const magicTest = async () => {
         const isLoggedIn = await magic.user.isLoggedIn();
@@ -48,8 +53,19 @@ export const Home = props => {
         console.log('Posts: ', posts)
     }
 
+    const uploadAndPostFiles = async e => {
+        let file = e.target.files[0]
+        if (file.type === 'image/jpeg' || file.type === 'image/jpeg') {
+            console.log(file)
+        } else { 
+            setOpenSnack(true)
+            setTimeout(() => setOpenSnack(false), 3000)
+        }
+    }
+
     return (
         <Cont>
+            <SnackBar visible={openSnack}/>
             <Left>
                 <ThreadInput createNewThread={createNewThread}/>
                 <ThreadList 
@@ -59,6 +75,7 @@ export const Home = props => {
 
             <Right>
                 <h1>Hello World</h1>
+                <UploadButton uploadAndPostFiles={uploadAndPostFiles}/>
             </Right>
         </Cont>
     )
