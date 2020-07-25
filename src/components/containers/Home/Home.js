@@ -13,7 +13,7 @@ export const Home = props => {
 
     const [three, setThree] = useState({})
     const [threads, setThreads] = useState([])
-    const [selectedThread, setSelectedThread] = useState({})
+    const [posts, setPosts] = useState({})
 
     useEffect(() => {
         console.log('MATCH: ', props.match)
@@ -42,8 +42,10 @@ export const Home = props => {
         setThreads(getThreads)
     }
 
-    const selectThread = thread => {
-        console.log(thread)
+    const selectThread = async thread => {
+        let threadInstance = await three.space.joinThreadByAddress(thread.address)
+        let posts = await threadInstance.getPosts()
+        console.log('Posts: ', posts)
     }
 
     return (
