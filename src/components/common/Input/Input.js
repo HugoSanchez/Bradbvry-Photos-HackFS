@@ -22,7 +22,7 @@ export const ThreadInput = props => {
       type="text" 
       name="text" 
       value={value}
-      placeholder="Collection Name" 
+      placeholder="Collection Name..." 
       onChange={handleChange}
       onKeyDown={onKeyPress}
     />

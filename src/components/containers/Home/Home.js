@@ -31,10 +31,7 @@ export const Home = props => {
         const space = await box.openSpace('bradbvry--main')
         await box.syncDone
         const getThreads = await space.subscribedThreads()
-
         setThreads(getThreads)
-        // let name = threads[0].address.slice(86)
-        // console.log('Name: ', name)
         setThree({box, space, profile, data})
     }
 
@@ -45,11 +42,17 @@ export const Home = props => {
         setThreads(getThreads)
     }
 
+    const selectThread = thread => {
+        console.log(thread)
+    }
+
     return (
         <Cont>
             <Left>
                 <ThreadInput createNewThread={createNewThread}/>
-                <ThreadList threads={threads}/>
+                <ThreadList 
+                    threads={threads}
+                    selectThread={selectThread}/>
             </Left>
 
             <Right>
@@ -73,6 +76,7 @@ const Left = styled.div`
     border-right: 1px solid rgba(180, 180, 180, 0.4);
     justify-content: center;
     align-items: center;
+    background: rgba(255, 255, 255, 0.2)
 `;
 
 const Right = styled.div`
