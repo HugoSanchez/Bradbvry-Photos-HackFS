@@ -25,12 +25,12 @@ const ListItem = styled.div`
   margin-top: 5%;
   width: 80%;
   height: 55px;
-  border: 0.5px solid rgb(140, 140, 140);
   border-radius: 5px;
   font-family: 'Montserrat';
   font-size: 15px;
   font-weight: 400;
   text-align: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);     
 `;
 
 
