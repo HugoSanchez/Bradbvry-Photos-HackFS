@@ -2,7 +2,7 @@ import React, {useEffect, useState, createRef} from 'react';
 import {ThreadList} from '../../common/ThreadList';
 import {ThreadInput} from '../../common/Input';
 import {UploadButton} from '../../common/UploadButton'
-import {SnackBar} from '../../common/SnackBar';
+import {SnackBar, Text} from '../../common';
 import {magicKey} from '../../../config';
 import styled from 'styled-components';
 
@@ -17,7 +17,8 @@ export const Home = props => {
 
     const [three, setThree] = useState({})
     const [threads, setThreads] = useState([])
-    const [openSnack, setOpenSnack] = useState(false)
+    const [openSnack, setOpenSnack] = useState('')
+    const [uploadSuccess, setUploadSuccess] = useState(false)
     const [posts, setPosts] = useState({})
 
 
@@ -57,15 +58,20 @@ export const Home = props => {
         let file = e.target.files[0]
         if (file.type === 'image/jpeg' || file.type === 'image/jpeg') {
             console.log(file)
+            setUploadSuccess(true)
+            setOpenSnack('show')
+            setTimeout(() => setOpenSnack(''), 4000)
         } else { 
-            setOpenSnack(true)
-            setTimeout(() => setOpenSnack(false), 3000)
+            setUploadSuccess(false)
+            setOpenSnack('show')
+            setTimeout(() => setOpenSnack(''), 4000)
         }
     }
 
     return (
         <Cont>
-            <SnackBar visible={openSnack}/>
+            <SnackBar className={openSnack} success={uploadSuccess}>
+            </SnackBar>
             <Left>
                 <ThreadInput createNewThread={createNewThread}/>
                 <ThreadList 
