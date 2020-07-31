@@ -4,6 +4,24 @@
   text-align: center;
 }
 
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  width: auto;
+  padding-left: 50px;
+}
+
+.my-masonry-grid_column {
+  background-clip: padding-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
 #Snackbar {
   visibility: hidden;
   min-width: 250px;

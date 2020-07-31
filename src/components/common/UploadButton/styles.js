@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CircularButton = styled.div`
     z-index: 2;
-    bottom: 5rem;
+    bottom: 3rem;
     right: 5rem;
     width: 3rem; 
     height: 3rem; 

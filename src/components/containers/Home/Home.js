@@ -1,19 +1,17 @@
-import React, {useEffect, useState, createRef} from 'react';
+import React, {useEffect, useState, Fragment} from 'react';
 import {ThreadList} from '../../common/ThreadList';
 import {ThreadInput} from '../../common/Input';
 import {UploadButton} from '../../common/UploadButton'
 import {SnackBar} from '../../common';
 import {magicKey} from '../../../config';
 import styled from 'styled-components';
-
+import Masonry from 'react-masonry-css'
 
 const Box = require('3box');
 const { Magic } = require('magic-sdk');
 const magic = new Magic(magicKey);
 
 export const Home = props => {
-
-    const ref = createRef()
 
     const [three, setThree] = useState({})
     const [threads, setThreads] = useState([])
@@ -57,20 +55,18 @@ export const Home = props => {
     const uploadAndPostFiles = async e => {
         let file = e.target.files[0]
         if (file.type === 'image/jpeg' || file.type === 'image/jpeg') {
-            console.log(file)
             handleShowSnackbar(true)
-            let base64 = await getBase64(file)
-            await threadAndPosts.threadInstance.post(base64)
-            let posts = await threadAndPosts.threadInstance.getPosts()
-            // setPosts(base64)
-            console.log(posts)
-
-            
+            await handleEncodeAndPostFile(file)
         } else { 
             handleShowSnackbar(false)
-
         }
     }
+
+    const handleEncodeAndPostFile = async file => {
+        let base64 = await getBase64(file)
+        await threadAndPosts.threadInstance.post(base64)
+        await selectThread(threadAndPosts.threadInstance)
+    } 
 
     const handleShowSnackbar = bool => {
         setUploadSuccess(bool)
@@ -100,17 +96,29 @@ export const Home = props => {
             </Left>
 
             <Right>
-                <Title>
-                    {
-                        threadAndPosts.threadInstance ?
-                        threadAndPosts.threadInstance.address.slice(86)
-                        : null
-                    }
-                </Title>
-                <UploadButton uploadAndPostFiles={uploadAndPostFiles}/>
                 {
                     threadAndPosts.threadInstance ?
-                    <Image src={threadAndPosts.posts[0].message} alt="something" />
+                    <Fragment>
+                        <Title>
+                            {
+                                threadAndPosts.threadInstance ?
+                                threadAndPosts.threadInstance.address.slice(86)
+                                : null
+                            }
+                        </Title>
+                        <Masonry
+                            breakpointCols={2}
+                            className="my-masonry-grid"
+                            columnClassName="my-masonry-grid_column">
+                            {
+                                threadAndPosts.posts.map((p, i) => {
+                                    return (
+                                        <Image src={p.message} alt={i} key={i}/>
+                                    )})
+                            }
+                        </Masonry>
+                        <UploadButton uploadAndPostFiles={uploadAndPostFiles}/>
+                    </Fragment>
                     :
                     null
                 }
@@ -141,7 +149,8 @@ const Right = styled.div`
 `;
 
 const Image = styled.img`
-    width: 50%;
+    width: 90%;
+    padding-top: 15px;
 `
 
 const Title = styled.h1`
