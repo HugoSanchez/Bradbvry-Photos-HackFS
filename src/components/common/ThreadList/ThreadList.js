@@ -1,12 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import {IconContext} from 'react-icons';
-import {RiFolderLine} from 'react-icons/ri'
+import {RiFolderLine} from 'react-icons/ri';
 
 
 export const ThreadList = props => {
+  let selectedThread
+
+  if (props.selectedThread.threadInstance){
+    selectedThread = props.selectedThread.threadInstance.address;
+  }
+
   return props.threads.map(thread => 
-    <ListItem key={thread.address}>
+    <ListItem 
+      key={thread.address} 
+      selected={thread.address === selectedThread ? true : false}>
       <IconBox>
         <IconContext.Provider value={{size: 24, color: 'black'}}>
           <RiFolderLine />
@@ -28,9 +36,12 @@ const ListItem = styled.div`
   border-radius: 5px;
   font-family: 'Montserrat';
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 300;
   text-align: center;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);     
+  box-shadow: ${props => props.selected ? 
+    '0 1px 5px rgba(0,0,0,0.1)' 
+    : 
+    '0 3px 10px rgba(0,0,0,0.1)'};    
 `;
 
 
@@ -56,6 +67,6 @@ const MaybeBox = styled.div`
 const Title = styled.p`
   font-family: 'Montserrat';
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 400;
   color: rgb(80, 80, 80)
 `;
