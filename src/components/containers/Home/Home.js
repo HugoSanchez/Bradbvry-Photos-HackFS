@@ -6,6 +6,7 @@ import {SnackBar} from '../../common';
 import {magicKey} from '../../../config';
 import styled from 'styled-components';
 import Masonry from 'react-masonry-css'
+import emailjs from 'emailjs-com';
 
 const Box = require('3box');
 const { Magic } = require('magic-sdk');
@@ -48,6 +49,7 @@ export const Home = props => {
 
     const selectThread = async thread => {
         let threadInstance = await three.space.joinThreadByAddress(thread.address)
+        console.log(thread.address)
         let posts = await threadInstance.getPosts()
         setThreadAndPosts({threadInstance, posts})
     }
