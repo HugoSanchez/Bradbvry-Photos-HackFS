@@ -29,7 +29,7 @@ export const AddMember = props => {
     [])
 
     const checkLoginAndRedirect = async () => {
-
+      console.log(props.match)
       /** 
       let profile = await Box.getProfile(props.match.params.user)
       console.log(profile)
@@ -75,16 +75,19 @@ export const AddMember = props => {
     }
 
     return (
-      <Fragment>
+      <SignInCard>
         <Logo src={logo} alt=''/>
-        <Title>Sign In to join the collection 
-          <span style={{fontWeight: 600}}>"{props.match.params.threadName.slice(27)}"</span>
+        <Title>Add <span style={{fontWeight: 600}}>{props.match.params.email}</span> to your 
+          <span style={{fontWeight: 600}}> "{props.match.params.threadName.slice(27)}"</span> collection!
         </Title>
         <Text>
-          You've been invited to join the collection <span style={{fontWeight: 600}}>"{props.match.params.threadName.slice(27)}". </span>
-          This is a members-only collection, wich means that you should first sign in here:       
+          <span style={{fontWeight: 600}}>{props.match.params.email}</span> has accepted your invitation to join your collection <span style={{fontWeight: 600}}>"{props.match.params.threadName.slice(27)}". </span>
+          This is a members-only collection, wich means that you should confirm its membership here:       
         </Text>
-      </Fragment>
+        <Button type="submit">
+            <ButtonText>Confirm Membership</ButtonText>
+          </Button>
+      </SignInCard>
     )
 }
 

@@ -5,17 +5,19 @@ export const SignInCard = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
   width: 35vw;
   border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2); 
   background-color: rgba(255, 255, 255, 1);
   overflow: hidden;
 `;
 
 export const Logo = styled.img`
-  margin-top: 10%;
+  margin-top: 5%;
   width: 150px;
 `;
 
@@ -36,7 +38,7 @@ export const Text = styled.p`
   color: rgb(55, 55, 55);
   line-height: 1.8;
   margin-bottom: 10%;
-  font-size: 16px;
+  font-size: 18px;
 `;
 
 export const Input = styled.input`
@@ -63,22 +65,24 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   outline: none;
   border: none;
   border-radius: 5px;
-  margin-top: 5%;
   height: 55px;
-  width: 80%;
+  width: 70%;
   background-color: rgba(197, 255, 220, 1);
   box-shadow: 0 0 10px rgba(0,0,0,0.1); 
-
   :hover {
     box-shadow: 0 0 10px rgba(0,0,0,0.15); 
   }
 `;
 
 export const ButtonText = styled.p`
-  color: rgb(55, 55, 55);
+  color: rgb(80, 80, 80);
   font-family: 'Montserrat';
   font-size: 18px;
   font-weight: 500;

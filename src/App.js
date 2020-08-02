@@ -2,6 +2,7 @@ import React from 'react';
 import {SignIn} from './components/containers/SignIn';
 import {Home} from './components/containers/Home';
 import {AcceptInvite} from './components/containers/AcceptInvite';
+import {AddMember} from './components/containers/AddMember';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import './App.css';
 
@@ -15,6 +16,7 @@ function App() {
           <Route path='/Signin' component={SignIn} />
           <Route path='/app/:user' component={Home} />
           <Route path='/accept-invite/:user/:thread/:threadName' component={AcceptInvite}/>
+          <Route path='/add-member/:member/:thread/:threadName/:email' component={AddMember}/>
           <Route exact path="/" render={() => (<Redirect to='/app/:user' />)} /> 
         </Switch>
       </BrowserRouter>
