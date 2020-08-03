@@ -16,7 +16,7 @@ function App() {
           <Route path='/Signin' component={SignIn} />
           <Route path='/app/:user' component={Home} />
           <Route path='/accept-invite/:user/:thread/:threadName' component={AcceptInvite}/>
-          <Route path='/add-member/:member/:thread/:threadName/:email' component={AddMember}/>
+          <Route path='/add-member/:memberAddress/:thread/:threadName/:email' component={AddMember}/>
           <Route exact path="/" render={() => (<Redirect to='/app/:user' />)} /> 
         </Switch>
       </BrowserRouter>

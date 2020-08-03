@@ -23,6 +23,7 @@ export const Home = props => {
 
     useEffect(() => {
         console.log('MATCH: ', props.match)
+        
         magicTest()
     }, [])
 
@@ -36,6 +37,7 @@ export const Home = props => {
         const space = await box.openSpace('bradbvry--main')
         await box.syncDone
         const getThreads = await space.subscribedThreads()
+        console.log('subscribed threads: ', getThreads)
         setThreads(getThreads)
         setThree({box, space, profile, data})
     }
@@ -48,10 +50,14 @@ export const Home = props => {
     }
 
     const selectThread = async thread => {
+        console.log('here!', thread.address)
         let threadInstance = await three.space.joinThreadByAddress(thread.address)
         console.log(thread.address)
         let posts = await threadInstance.getPosts()
         setThreadAndPosts({threadInstance, posts})
+
+        let members = await threadInstance.listMembers()
+        console.log('Members: ', members)
     }
 
     const uploadAndPostFiles = async e => {
@@ -87,8 +93,7 @@ export const Home = props => {
 
     return (
         <Cont>
-            <SnackBar className={openSnack} success={uploadSuccess}>
-            </SnackBar>
+            <SnackBar className={openSnack} success={uploadSuccess} />
             <Left>
                 <ThreadInput createNewThread={createNewThread}/>
                 <ThreadList 
