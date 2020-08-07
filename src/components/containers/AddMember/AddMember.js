@@ -43,10 +43,12 @@ export const AddMember = props => {
 
       if (!isLogged) {
         let data = await magic.user.getMetadata()
+
         history.push(`/app/${data.publicAddress}`)} 
       
       else {
         let data = await magic.user.getMetadata()
+        console.log(data)
         let box = await Box.openBox(data.publicAddress, magic.rpcProvider); 
         let space = await box.openSpace('bradbvry--main')
         setThree({data, box, space})
@@ -58,10 +60,11 @@ export const AddMember = props => {
       let threadAddress = `/orbitdb/${thread}/${threadName}`
       let threadInstance = await three.space.joinThreadByAddress(threadAddress, {members: true})
 
-      // await threadInstance.addMember(memberAddress)
-      // await three.box.syncDone
-    
+      await threadInstance.addMember(memberAddress)
+      await three.box.syncDone
 
+      console.log('here')
+    
       showSnackBarAndRedirect(three.data.publicAddress)
     }
 
@@ -70,14 +73,13 @@ export const AddMember = props => {
       setTimeout(() => {
         setOpenSnack('')
         history.push(`/app/${address}`)
-        console.log('DONE "')
       }, 3500)
 
     }
 
     return (
       <Fragment>
-        <SnackBar className={openSnack} success={true} newMember={true}/>
+        <SnackBar className={openSnack} success={true} message={'New member added successfully!'}/>
 
         <SignInCard>
           <Logo src={logo} alt=''/>
@@ -85,11 +87,12 @@ export const AddMember = props => {
             <span style={{fontWeight: 600}}> "{props.match.params.threadName.slice(27)}"</span> collection!
           </Title>
           <Text>
-            <span style={{fontWeight: 600}}>{props.match.params.email}</span> 
+            <span style={{fontWeight: 600}}>{props.match.params.email} </span> 
             has accepted your invitation to join your collection 
             <span style={{fontWeight: 600}}>"{props.match.params.threadName.slice(27)}". </span>
             This is a members-only collection, wich means that you should confirm its membership here:       
           </Text>
+          
           <Button type="submit" onClick={handleConfirmMember}>
             <ButtonText>Confirm Membership</ButtonText>
           </Button>

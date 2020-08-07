@@ -7,9 +7,8 @@ export const SnackBar = props => {
   return (
     <div id="Snackbar" className={props.className}> 
     <MessageBox success={props.success}>
-      {props.success && !props.newMember && <Text>Successfully uploaded picture!</Text>}
-      {!props.success && <Text>Wrong file type - only jpeg or png.</Text>}
-      {props.success && props.newMember && <Text>New member added successfully!</Text>}
+      {props.success && <Text>{props.message}</Text>}
+      {!props.success && <Text>{props.message}</Text>}
       </MessageBox>
     </div>
   )

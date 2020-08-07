@@ -2,6 +2,7 @@ import React, {useEffect, useState, Fragment} from 'react';
 import { useHistory } from "react-router-dom";
 import logo from '../../../blogo.png';
 import {magicKey} from '../../../config';
+import axios from 'axios';
 
 import {
     SignInCard,
@@ -19,6 +20,12 @@ const magic = new Magic(magicKey);
 
 export const AcceptInvite = props => {
 
+    let {
+      user,
+      thread,
+      threadName,
+    } = props.match.params
+
     const history = useHistory();
 
     const [loading, setLoading] = useState(true)
@@ -29,27 +36,23 @@ export const AcceptInvite = props => {
     [])
 
     const checkLoginAndRedirect = async () => {
-      let profile = await Box.getProfile(props.match.params.user)
-      console.log(profile)
+
       let isLogged = await magic.user.isLoggedIn();
-      console.log('Is logged?: ', isLogged)
       setIsLoggedIn(isLogged)
+      
       if (isLogged) {
         let data = await magic.user.getMetadata()
-        // history.push(`/app/${data.publicAddress}`)
-        console.log('data')
+
       } else {
         console.log(props.match)
       }
     }
-
+    // http://localhost:3000/add-member/0xCf2E58CEFFE93fB2C1649aeC69778D491aEEB7Ee/zdpuB2DZmZN8v2YFQsMMd69QjShFv7LTZ8WfJEpv7pSc1cvmk/3box.thread.bradbvry--main.Something/hugo@bradbvry.com
+    
     const handleLogin = async e => {
       e.preventDefault();
       const email = new FormData(e.target).get("email");
       console.log(email)
-
-      let thread = props.match.params.thread
-      let threadName = props.match.params.threadName
 
       if (email) {
         await magic.auth.loginWithMagicLink({ email });
@@ -63,12 +66,27 @@ export const AcceptInvite = props => {
 
         await box.syncDone
         const subscribedThreads = await space.subscribedThreads()
+
+        await sendAcceptedMessage(data)
         
         console.log('Threads: ', subscribedThreads)
+        history.push(`/app/${data.publicAddress}`)
 
-        // let data = await magic.user.getMetadata()
-        // history.push(`/app/${data.publicAddress}`)
       }
+    }
+
+    const sendAcceptedMessage = async (data) => {
+      let baseUrl = 'http://localhost:3000/add-member'
+      let acceptUrl = baseUrl + `/${data.publicAddress}/${thread}/${threadName}/${data.email}`
+      let sender = data.email
+      let senderAddress = data.publicAddress
+      let collectionName = threadName.slice(27)
+      let inviter = user
+      
+      // http://localhost:3000/add-member/0xCf2E58CEFFE93fB2C1649aeC69778D491aEEB7Ee/zdpuB2DZmZN8v2YFQsMMd69QjShFv7LTZ8WfJEpv7pSc1cvmk/3box.thread.bradbvry--main.Something/hugo@bradbvry.com
+      let reqData = {acceptUrl, sender, senderAddress, collectionName, inviter}
+      let req = await axios.post('http://localhost:1000/api/share/add-invited-member', reqData)
+      console.log(req)
     }
 
     return (

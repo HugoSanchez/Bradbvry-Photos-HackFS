@@ -16,7 +16,6 @@ export const Input = styled.input`
     background: rgba(229, 238, 244, 0.4);
     box-shadow: 0 3px 5px rgba(0,0,0,0.1);     
 
-
     ::placeholder,
     ::-webkit-input-placeholder {
         color: rgb(80, 80, 80);

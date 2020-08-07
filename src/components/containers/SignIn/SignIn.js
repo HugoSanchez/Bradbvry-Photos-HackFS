@@ -29,7 +29,7 @@ export const SignIn = props => {
         let isLogged = await magic.user.isLoggedIn();
         if (isLogged) {
           let data = await magic.user.getMetadata()
-          history.push(`/app/${data.publicAddress}`)
+          // history.push(`/app/${data.publicAddress}`)
         }
     }
 
