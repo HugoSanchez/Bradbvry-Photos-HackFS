@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "3box": "^1.18.1",
+    "3box": "^1.22.2",
     "@material-ui/core": "^4.11.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -16,7 +16,7 @@
     "react-icons": "^3.10.0",
     "react-masonry-css": "^1.0.14",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
+    "react-scripts": "5.0.1",
     "styled-components": "^5.1.1"
   },
   "scripts": {
